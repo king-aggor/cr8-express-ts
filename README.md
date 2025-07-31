@@ -1,6 +1,7 @@
 # cr8-express-ts
 
 [![npm version](https://img.shields.io/npm/v/cr8-express-ts)](https://www.npmjs.com/package/cr8-express-ts)
+[![GitHub](https://img.shields.io/badge/GitHub-View%20Repo-blue?logo=github)](https://github.com/king-aggor/cr8-express-ts)
 [![npm downloads](https://img.shields.io/npm/dt/cr8-express-ts.svg)](https://www.npmjs.com/package/cr8-express-ts)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
@@ -17,6 +18,7 @@
 - [📝 NPM Scripts](#-npm-scripts)
 - [📜 Included Middleware](#-included-middleware)
 - [🤝 Contributing](#-contributing)
+- [🔗 Links](#-links)
 
 ---
 
@@ -118,3 +120,8 @@ awesome-api/
 ## 🤝 Contributing
 
 Pull requests are welcome! If you find a bug or have a feature request, feel free to open an issue or submit a PR.
+
+## 🔗 Links
+
+- 📦 [View on NPM](https://www.npmjs.com/package/cr8-express-ts)
+- 🐙 [Source on GitHub](https://github.com/king-aggor/cr8-express-ts)

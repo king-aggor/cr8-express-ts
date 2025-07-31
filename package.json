@@ -15,6 +15,14 @@
     "boilerplate",
     "starter"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/king-aggor/cr8-express-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/king-aggor/cr8-express-ts/issues"
+  },
+  "homepage": "https://github.com/king-aggor/cr8-express-ts#readme",
   "author": "King Aggor<emmanuelaggor.ea@gmail.com>",
   "license": "MIT"
 }
