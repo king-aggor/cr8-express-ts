@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+
+
+APP_NAME=$1
+
+if [ -z "$1" ]; then
+  echo "❌ Please provide a project name. Example: awsome-api"
+  exit 1
+fi
+
+# create a new directory for the application
+mkdir $APP_NAME
+cd $APP_NAME
+
+# initialize Typescript and install dependencies
+npm init -y
+npm install express dotenv
+npm install typescript ts-node @types/node @types/express nodemon --save-dev
+
+# create tsconfig.json
+npx tsc --init --rootDir src --outDir dist --esModuleInterop --resolveJsonModule --lib ES6 --module commonjs --target ES6
+
+# create the directories
+mkdir src public
+mkdir src/routes src/controllers src/middlewares src/utils
+
+# create app.ts
+cat > src/app.ts << EOF
+import express, {Request, Response, NextFunction} from 'express';
+
+const app = express();
+
+// middlewares
+app.use(express.json());
+
+//routes
+app.get('/', (req: Request, res: Response) => {
+    res.json("Welcome to $APP_NAME");
+});
+
+export default app;
+EOF
+
+# create server.ts
+cat > src/server.ts << 'EOF'
+import app from './app';
+import dotenv from 'dotenv';
+
+dotenv.config();
+const PORT: number = Number(process.env.PORT) || 3000;
+
+// start the server
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+EOF
+
+cat > .gitignore << EOF
+node_modules
+dist
+.env
+EOF
+
+# create .env file
+echo "PORT=3000" > .env
+
+# update package.json scripts
+npm pkg set scripts.start="node dist/server.js"
+npm pkg set scripts.dev="nodemon src/server.ts"
+npm pkg set scripts.build="tsc"
+
+GREEN='\033[0;32m'
+BOLD='\033[1m'
+NC='\033[0m' # No Color
+
+BOX_WIDTH=76
+MESSAGE="✅  Project '${APP_NAME}' has been created with TypeScript!"
+PADDING=$(( BOX_WIDTH - 4 - ${#MESSAGE} ))  # 4 chars for borders and spaces
+SPACES=$(printf '%*s' "$PADDING" '')
+
+# success message
+echo ""
+echo -e "${GREEN}${BOLD}╭────────────────────────────────────────────────────────────────────────────╮"
+echo -e "│ ${MESSAGE}${SPACES}  │"
+echo -e "╰────────────────────────────────────────────────────────────────────────────╯${NC}"
+echo ""
+echo -e "${BOLD}Next steps:${NC}"
+echo -e "  💻  ${BOLD}cd ${APP_NAME}${NC}"
+echo -e "  🚀  ${BOLD}npm run dev${NC}"
+echo ""
+echo -e "${GREEN}✨ Happy coding! ✨${NC}"
+read -n 1 -s -r -p "🔧 Press any key to exit..."
+echo ""

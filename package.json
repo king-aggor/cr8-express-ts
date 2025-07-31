@@ -1,0 +1,20 @@
+{
+  "name": "cr8-express-ts",
+  "version": "1.0.2",
+  "description": "A CLI tool to scaffold a TypeScript Express.js project",
+  "bin": {
+    "cr8-express-ts": "./bin/cr8-express-ts"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "express",
+    "typescript",
+    "boilerplate",
+    "starter"
+  ],
+  "author": "King Aggor<emmanuelaggor.ea@gmail.com>",
+  "license": "MIT"
+}
