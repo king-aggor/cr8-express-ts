@@ -14,7 +14,7 @@ cd $APP_NAME
 
 # initialize Typescript and install dependencies
 npm init -y
-npm install express dotenv
+npm install express dotenv cors morgan
 npm install typescript ts-node @types/node @types/express nodemon --save-dev
 
 # create tsconfig.json
@@ -24,19 +24,53 @@ npx tsc --init --rootDir src --outDir dist --esModuleInterop --resolveJsonModule
 mkdir src public
 mkdir src/routes src/controllers src/middlewares src/utils
 
+# create custom error handler
+cat > src/middlewares/errorHandler.ts << EOF
+class CustomError extends Error {
+  statusCode: number;
+
+  constructor(message: string, statusCode: number) {
+    super(message);
+    this.statusCode = statusCode;
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
+
+export default CustomError;
+
+EOF
+
+
 # create app.ts
 cat > src/app.ts << EOF
 import express, {Request, Response, NextFunction} from 'express';
+import morgan from 'morgan';
+import cors from "cors";
 
 const app = express();
 
 // middlewares
 app.use(express.json());
+// morgan middleware for logging
+app.use(morgan("combined"));
+// cors middleware
+app.use(
+  cors({
+    origin: *, // allow all origins
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PACTH" "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 //routes
 app.get('/', (req: Request, res: Response) => {
     res.json("Welcome to $APP_NAME");
 });
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  res.status(err.status || 500).json({ error: err });
+});
+
 
 export default app;
 EOF
