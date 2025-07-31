@@ -4,7 +4,7 @@
 APP_NAME=$1
 
 if [ -z "$1" ]; then
-  echo "❌ Please provide a project name. Example: awsome-api"
+  echo "❌ Please provide a project name. Example: awesome-api"
   exit 1
 fi
 
@@ -15,10 +15,14 @@ cd $APP_NAME
 # initialize Typescript and install dependencies
 npm init -y
 npm install express dotenv cors morgan
-npm install typescript ts-node @types/node @types/express nodemon --save-dev
+npm install typescript ts-node @types/node @types/express @types/dotenv @types/cors @types/morgan nodemon --save-dev
 
 # create tsconfig.json
 npx tsc --init --rootDir src --outDir dist --esModuleInterop --resolveJsonModule --lib ES6 --module commonjs --target ES6
+
+# change verbatimModuleSyntax to false in tsconfig.json
+sed -i 's|"verbatimModuleSyntax": true|"verbatimModuleSyntax": false|' tsconfig.json
+
 
 # create the directories
 mkdir src public
@@ -56,9 +60,9 @@ app.use(morgan("combined"));
 // cors middleware
 app.use(
   cors({
-    origin: *, // allow all origins
+    origin: "*", // allow all origins
     credentials: true,
-    methods: ["GET", "POST", "PUT", "PACTH" "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PACTH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
